@@ -27,7 +27,7 @@ struct HomeView: View {
                         
                         Text("no habits yet")
                             .font(.title2)
-                            .fontWeight(.semibold)
+                            .fontWeight(.bold)
                             .foregroundColor(.white)
                         
                         Text("tap + to create your first habit")
@@ -58,7 +58,7 @@ struct HeaderView: View {
                 Image(systemName: "flame.fill")
                     .foregroundColor(.white)
                 Text("1 day")
-                    .fontWeight(.semibold)
+                    .fontWeight(.heavy)
                     .foregroundColor(.white)
             }
             
