@@ -14,6 +14,8 @@
 		511ACD422D57857A001270BD /* habittrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511ACD412D57857A001270BD /* habittrackerTests.swift */; };
 		511ACD4C2D57857A001270BD /* habittrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511ACD4B2D57857A001270BD /* habittrackerUITests.swift */; };
 		511ACD4E2D57857A001270BD /* habittrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511ACD4D2D57857A001270BD /* habittrackerUITestsLaunchTests.swift */; };
+		519BB79C2D591864000264C2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519BB79B2D591864000264C2 /* HomeView.swift */; };
+		519BB79E2D591A7E000264C2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519BB79D2D591A7E000264C2 /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +47,8 @@
 		511ACD472D57857A001270BD /* habittrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = habittrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		511ACD4B2D57857A001270BD /* habittrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = habittrackerUITests.swift; sourceTree = "<group>"; };
 		511ACD4D2D57857A001270BD /* habittrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = habittrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		519BB79B2D591864000264C2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		519BB79D2D591A7E000264C2 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,8 @@
 			children = (
 				511ACD2F2D578577001270BD /* habittrackerApp.swift */,
 				511ACD312D578577001270BD /* ContentView.swift */,
+				519BB79D2D591A7E000264C2 /* LoginView.swift */,
+				519BB79B2D591864000264C2 /* HomeView.swift */,
 				511ACD332D57857A001270BD /* Assets.xcassets */,
 				511ACD352D57857A001270BD /* habittracker.entitlements */,
 				511ACD362D57857A001270BD /* Preview Content */,
@@ -259,7 +265,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				519BB79C2D591864000264C2 /* HomeView.swift in Sources */,
 				511ACD322D578577001270BD /* ContentView.swift in Sources */,
+				519BB79E2D591A7E000264C2 /* LoginView.swift in Sources */,
 				511ACD302D578577001270BD /* habittrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
