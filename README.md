@@ -1,8 +1,7 @@
 # trackit
-trackit is the habit tracker ** you need ** * not want *
+trackit is the habit tracker **you need** *not want*
 
 ## Features
 
-[x] log in with apple, google, and continue as guest!
-[] create and delete habits
-
+- [X] Log in with Apple, Google, and continue as guest!  
+- [ ] Create and delete habits  
