@@ -42,6 +42,8 @@ struct HomeView: View {
 }
 
 struct HeaderView: View {
+    @State private var createScreen = false
+
     var body: some View {
         HStack(spacing: 16) {
             Button(action: {
@@ -65,15 +67,42 @@ struct HeaderView: View {
             Spacer()
             
             Button(action: {
-                print("added habit")
+                createScreen.toggle()
             }) {
                 Image(systemName: "plus.circle.fill")
                     .font(.system(size: 18))
                     .foregroundColor(.white)
             }
         }
+        .sheet(isPresented: $createScreen) {
+            NavigationView {
+                CreateView()
+                    .navigationBarTitle("New Habit", displayMode: .inline)
+                    // add cancel and done
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button("Cancel") {
+                                createScreen = false
+                            }
+                            .foregroundColor(.white)
+                            .fontWeight(.heavy)
+
+                        }
+                        
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("Done") {
+                                createScreen = false
+                            }
+                            .foregroundColor(.white)
+                            .fontWeight(.heavy)
+
+                        }
+                    }
+            }
+        }
     }
 }
+
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
