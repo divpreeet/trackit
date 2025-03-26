@@ -43,7 +43,23 @@ struct HomeView: View {
 
 struct HeaderView: View {
     @State private var createScreen = false
-
+    
+    init() {
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [
+            .font: UIFont.boldSystemFont(ofSize: 17)
+        ]
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
+    
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d"
+        return formatter
+    }()
+    
     var body: some View {
         HStack(spacing: 16) {
             Button(action: {
@@ -57,11 +73,9 @@ struct HeaderView: View {
             Spacer()
             
             HStack(spacing: 4) {
-                Image(systemName: "flame.fill")
-                    .foregroundColor(.white)
-                Text("1 day")
-                    .fontWeight(.heavy)
-                    .foregroundColor(.white)
+                Text(dateFormatter.string(from: Date()))
+                    .font(.system(size: 18))
+                    .fontWeight(.bold)
             }
             
             Spacer()
@@ -78,30 +92,21 @@ struct HeaderView: View {
             NavigationView {
                 CreateView()
                     .navigationBarTitle("New Habit", displayMode: .inline)
-                    // add cancel and done
+
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button("Cancel") {
                                 createScreen = false
                             }
                             .foregroundColor(.white)
-                            .fontWeight(.heavy)
 
                         }
-                        
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button("Done") {
-                                createScreen = false
-                            }
-                            .foregroundColor(.white)
-                            .fontWeight(.heavy)
-
-                        }
-                    }
+                }
             }
         }
     }
 }
+
 
 
 struct HomeView_Previews: PreviewProvider {
