@@ -18,8 +18,11 @@ struct CreateView: View {
         .red, .yellow, .green, .blue
     ]
     
-    // Computed property to check if the button should be disabled
-    var isCreateButtonDisabled: Bool {
+    @EnvironmentObject var habitStore: HabitStore
+    @Environment(\.presentationMode) var presentationMode
+    
+    // disable the create button if data isnt filled
+    var isdisabled: Bool {
         habitName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
         habitDesc.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
@@ -116,21 +119,26 @@ struct CreateView: View {
             .scrollContentBackground(.hidden)
             .background(Color(hex: 0x080808))
             
-            // Create Habit Button
             Button(action: {
-                print(habitName)
+                let newHabit = Habit(name: habitName,
+                                     description: habitDesc,
+                                     frequency: selectedFrequency.rawValue,
+                                     colorHex: habitColor.toHex,
+                                     notificationsEnabled: notifications,
+                                     creationDate: Date())
+                habitStore.add(habit: newHabit)
+                presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Create Habit")
                     .fontWeight(.bold)
-                    .foregroundColor(isCreateButtonDisabled ? Color.white.opacity(0.6) : .black)
+                    .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(isCreateButtonDisabled ? Color.gray : Color.white)
+                    .background(Color.white)
                     .cornerRadius(10)
             }
             .padding()
-            // Disable the button if either field is empty
-            .disabled(isCreateButtonDisabled)
+            .disabled(isdisabled)
         }
         .background(Color(hex: 0x080808).edgesIgnoringSafeArea(.all))
     }

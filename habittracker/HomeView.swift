@@ -1,40 +1,92 @@
-//
-//  HomeView.swift
-//  habittracker
-//
-//  Created by Divpreet Singh on 09/02/2025.
-//
-
 import SwiftUI
 
 struct HomeView: View {
+    @StateObject var habitStore = HabitStore()
+    @State private var editingHabit: Habit? = nil
+    @State private var showEditSheet = false
+    
     var body: some View {
-        ZStack{
-            Color(hex:0x080808)
+        ZStack {
+            Color(hex: 0x080808)
                 .edgesIgnoringSafeArea(.all)
-
+            
             VStack(spacing: 0) {
                 HeaderView()
+                    .environmentObject(habitStore)
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
+                    .padding(.bottom, 24)
+                    
                 
-                if true { 
+                if habitStore.habits.isEmpty {
                     Spacer()
                     VStack(spacing: 12) {
                         Image(systemName: "checkmark.seal.fill")
                             .font(.system(size: 64))
                             .foregroundColor(.gray)
-                        
                         Text("no habits yet")
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
-                        
                         Text("tap + to create your first habit")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                     }
                     Spacer()
+                } else {
+                    List {
+                        ForEach(habitStore.habits) { habit in
+                            HabitCard(habit: habit, onComplete: {
+                                habitStore.completeHabit(habit)
+                            })
+                                .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 6, trailing: 16))
+                                .listRowBackground(Color.clear)
+                                .listRowSeparator(.hidden)
+                                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                    Button(role: .destructive) {
+                                        if let index = habitStore.habits.firstIndex(where: { $0.id == habit.id }) {
+                                            habitStore.delete(at: IndexSet([index]))
+                                        }
+                                    } label: {
+                                        Image(systemName: "trash")
+                                    }
+                                    .tint(.red)
+                                
+                                
+                                }
+                                .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                    Button {
+                                        editingHabit = habit
+                                        showEditSheet = true
+                                    } label: {
+                                        Image(systemName: "pencil")
+                                    }
+                                    .tint(.blue)
+                                }
+                        }
+                    }
+                    .listStyle(PlainListStyle())
+                    .background(Color(hex: 0x080808))
+                    .scrollContentBackground(.hidden)
+                }
+            }
+            .sheet(isPresented: $showEditSheet, onDismiss: {
+                editingHabit = nil
+            }) {
+                if let habit = editingHabit {
+                    NavigationView {
+                        EditView(habit: habit)
+                            .navigationBarTitle("Edit Habit", displayMode: .inline)
+                            .toolbar {
+                                ToolbarItem(placement: .navigationBarLeading) {
+                                    Button("Cancel") {
+                                        showEditSheet = false
+                                    }
+                                    .foregroundColor(.white)
+                                }
+                            }
+                    }
+                    .environmentObject(habitStore)
                 }
             }
         }
@@ -43,12 +95,11 @@ struct HomeView: View {
 
 struct HeaderView: View {
     @State private var createScreen = false
+    @EnvironmentObject var habitStore: HabitStore
     
     init() {
         let appearance = UINavigationBarAppearance()
-        appearance.titleTextAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: 17)
-        ]
+        appearance.titleTextAttributes = [.font: UIFont.boldSystemFont(ofSize: 17)]
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().compactAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
@@ -72,11 +123,10 @@ struct HeaderView: View {
             
             Spacer()
             
-            HStack(spacing: 4) {
-                Text(dateFormatter.string(from: Date()))
-                    .font(.system(size: 18))
-                    .fontWeight(.bold)
-            }
+            Text(dateFormatter.string(from: Date()))
+                .font(.system(size: 18))
+                .fontWeight(.bold)
+                .foregroundColor(.white)
             
             Spacer()
             
@@ -92,22 +142,19 @@ struct HeaderView: View {
             NavigationView {
                 CreateView()
                     .navigationBarTitle("New Habit", displayMode: .inline)
-
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button("Cancel") {
                                 createScreen = false
                             }
                             .foregroundColor(.white)
-
                         }
-                }
+                    }
             }
+            .environmentObject(habitStore)
         }
     }
 }
-
-
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {

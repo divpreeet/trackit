@@ -14,9 +14,13 @@
 		511ACD422D57857A001270BD /* habittrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511ACD412D57857A001270BD /* habittrackerTests.swift */; };
 		511ACD4C2D57857A001270BD /* habittrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511ACD4B2D57857A001270BD /* habittrackerUITests.swift */; };
 		511ACD4E2D57857A001270BD /* habittrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511ACD4D2D57857A001270BD /* habittrackerUITestsLaunchTests.swift */; };
+		512999172D941EE000970462 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512999162D941EE000970462 /* Habit.swift */; };
+		514CC5AB2D9589C600D89894 /* HabitStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514CC5AA2D9589C600D89894 /* HabitStore.swift */; };
 		519BB79C2D591864000264C2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519BB79B2D591864000264C2 /* HomeView.swift */; };
 		519BB79E2D591A7E000264C2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519BB79D2D591A7E000264C2 /* LoginView.swift */; };
 		51BFD0B82D92BEA500FDC5BD /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BFD0B72D92BEA500FDC5BD /* CreateView.swift */; };
+		51EB2CC82D9949F6004959F5 /* HabitCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EB2CC72D9949F6004959F5 /* HabitCard.swift */; };
+		51EB2CCA2D995909004959F5 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EB2CC92D995909004959F5 /* EditView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,10 +52,14 @@
 		511ACD472D57857A001270BD /* habittrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = habittrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		511ACD4B2D57857A001270BD /* habittrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = habittrackerUITests.swift; sourceTree = "<group>"; };
 		511ACD4D2D57857A001270BD /* habittrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = habittrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		512999162D941EE000970462 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
+		514CC5AA2D9589C600D89894 /* HabitStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStore.swift; sourceTree = "<group>"; };
 		519BB79B2D591864000264C2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		519BB79D2D591A7E000264C2 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		51BFD0B72D92BEA500FDC5BD /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
 		51BFD0B92D92C41300FDC5BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		51EB2CC72D9949F6004959F5 /* HabitCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCard.swift; sourceTree = "<group>"; };
+		51EB2CC92D995909004959F5 /* EditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,10 +112,14 @@
 			children = (
 				51BFD0B92D92C41300FDC5BD /* Info.plist */,
 				511ACD2F2D578577001270BD /* habittrackerApp.swift */,
+				51EB2CC72D9949F6004959F5 /* HabitCard.swift */,
+				51EB2CC92D995909004959F5 /* EditView.swift */,
 				511ACD312D578577001270BD /* ContentView.swift */,
 				519BB79D2D591A7E000264C2 /* LoginView.swift */,
 				519BB79B2D591864000264C2 /* HomeView.swift */,
+				512999162D941EE000970462 /* Habit.swift */,
 				51BFD0B72D92BEA500FDC5BD /* CreateView.swift */,
+				514CC5AA2D9589C600D89894 /* HabitStore.swift */,
 				511ACD332D57857A001270BD /* Assets.xcassets */,
 				511ACD352D57857A001270BD /* habittracker.entitlements */,
 				511ACD362D57857A001270BD /* Preview Content */,
@@ -270,10 +282,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				512999172D941EE000970462 /* Habit.swift in Sources */,
 				519BB79C2D591864000264C2 /* HomeView.swift in Sources */,
 				511ACD322D578577001270BD /* ContentView.swift in Sources */,
 				519BB79E2D591A7E000264C2 /* LoginView.swift in Sources */,
+				51EB2CC82D9949F6004959F5 /* HabitCard.swift in Sources */,
+				51EB2CCA2D995909004959F5 /* EditView.swift in Sources */,
 				511ACD302D578577001270BD /* habittrackerApp.swift in Sources */,
+				514CC5AB2D9589C600D89894 /* HabitStore.swift in Sources */,
 				51BFD0B82D92BEA500FDC5BD /* CreateView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,6 +441,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = habittracker/habittracker.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -471,6 +488,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = habittracker/habittracker.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
