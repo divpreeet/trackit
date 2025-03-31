@@ -37,7 +37,7 @@ struct HabitCard: View {
                 .buttonStyle(PlainButtonStyle())
             }
         }
-        .padding(.vertical, 10) 
+        .padding(.vertical, 10)
         .padding(.horizontal, 24)
         .background(
             RoundedRectangle(cornerRadius: 8)

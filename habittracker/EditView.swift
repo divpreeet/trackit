@@ -1,0 +1,185 @@
+import SwiftUI
+
+struct EditView: View {
+    @State private var habitName: String
+    @State private var habitDesc: String
+    @State private var habitColor: Color
+    @State private var showCustomPicker = false
+    @State private var notifications: Bool
+    @State private var selectedFrequency: Frequency
+    
+    let habit: Habit
+    
+    enum Frequency: String, CaseIterable {
+        case daily = "Daily"
+        case weekly = "Weekly"
+        case monthly = "Monthly"
+    }
+    
+    let presetColors: [Color] = [
+        .red, .orange, .yellow, .green, .blue, .purple, .pink
+    ]
+    
+    @EnvironmentObject var habitStore: HabitStore
+    @Environment(\.presentationMode) var presentationMode
+    
+    init(habit: Habit) {
+        self.habit = habit
+        _habitName = State(initialValue: habit.name)
+        _habitDesc = State(initialValue: habit.description)
+        _habitColor = State(initialValue: Color(hex: habit.colorHex))
+        _notifications = State(initialValue: habit.notificationsEnabled)
+        
+        let freq = Frequency.allCases.first { $0.rawValue == habit.frequency } ?? .daily
+        _selectedFrequency = State(initialValue: freq)
+    }
+    
+    var isDisabled: Bool {
+        habitName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+        habitDesc.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Form {
+                Section(header: Text("BASIC INFORMATION").foregroundColor(.gray).font(.caption)) {
+                    TextField("Habit Name", text: $habitName)
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding(.vertical, 4)
+                    
+                    TextField("Habit Description", text: $habitDesc)
+                        .font(.system(size: 16))
+                        .foregroundColor(.white)
+                        .padding(.vertical, 4)
+                }
+                
+                Section(header: Text("FREQUENCY").foregroundColor(.gray).font(.caption)) {
+                    HStack {
+                        Text("Habit Frequency")
+                            .font(.system(size: 17))
+                            .foregroundColor(.white)
+                        
+                        Spacer()
+                        
+                        Picker("", selection: $selectedFrequency) {
+                            ForEach(Frequency.allCases, id: \.self) { frequency in
+                                Text(frequency.rawValue)
+                                    .font(.system(size: 17, weight: .medium))
+                            }
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .foregroundColor(.white)
+                        .tint(Color(hex: habitColor.toHex))
+                    }
+                }
+                
+                Section(header: Text("COLOR").foregroundColor(.gray).font(.caption)) {
+                    LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 7), spacing: 12) {
+                        ForEach(presetColors, id: \.self) { color in
+                            Circle()
+                                .fill(color)
+                                .frame(width: 38, height: 38)
+                                .overlay(
+                                    Circle()
+                                        .stroke(habitColor == color ? Color.white : Color.clear,
+                                                lineWidth: 3)
+                                )
+                                .shadow(color: color.opacity(0.5), radius: 3, x: 0, y: 2)
+                                .onTapGesture {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                        habitColor = color
+                                    }
+                                }
+                        }
+                        
+                        Button(action: {
+                            withAnimation {
+                                showCustomPicker.toggle()
+                            }
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.white)
+                                    .frame(width: 38, height: 38)
+                                    .overlay(
+                                        Image(systemName: "ellipsis")
+                                            .foregroundColor(.black)
+                                    )
+                                    .shadow(radius: 2)
+                            }
+                        }
+                    }
+                    .padding(.vertical, 8)
+                    
+                    if showCustomPicker {
+                        ColorPicker("Pick a custom color",
+                                    selection: $habitColor,
+                                    supportsOpacity: false)
+                        .padding(.vertical, 8)
+                        .foregroundColor(.white)
+                        .font(.system(size: 16, weight: .medium))
+                    }
+                }
+                
+                Section(header: Text("NOTIFICATIONS").foregroundColor(.gray).font(.caption)) {
+                    Toggle(isOn: $notifications) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Enable Notifications")
+                                .font(.system(size: 17))
+                                .foregroundColor(.white)
+                            
+                            Text("Receive reminders to keep your habit going!")
+                                .font(.footnote)
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    .tint(Color(hex: habitColor.toHex))
+                }
+            }
+            .scrollContentBackground(.hidden)
+            .background(Color(hex: 0x080808))
+            
+            Button(action: {
+                if let index = habitStore.habits.firstIndex(where: { $0.id == habit.id }) {
+                    let updatedHabit = Habit(name: habitName,
+                                         description: habitDesc,
+                                         frequency: selectedFrequency.rawValue,
+                                         colorHex: habitColor.toHex,
+                                         notificationsEnabled: notifications,
+                                         creationDate: habit.creationDate,
+                                         lastCompleted: habit.lastCompleted)
+                    habitStore.habits[index] = updatedHabit
+                }
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                Text("Save Changes")
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(isDisabled ? Color.gray : Color.white)
+                    )
+                    .animation(.easeInOut(duration: 0.2), value: isDisabled)
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 16)
+            .disabled(isDisabled)
+        }
+        .background(Color(hex: 0x080808).edgesIgnoringSafeArea(.all))
+    }
+}
+
+struct EditView_Previews: PreviewProvider {
+    static var previews: some View {
+        let sampleHabit = Habit(name: "Sample Habit", 
+                               description: "Sample Description", 
+                               frequency: "Daily", 
+                               colorHex: 0xFF0000, 
+                               notificationsEnabled: false, 
+                               creationDate: Date())
+        EditView(habit: sampleHabit)
+    }
+}
