@@ -110,16 +110,10 @@
 		511ACD2E2D578577001270BD /* habittracker */ = {
 			isa = PBXGroup;
 			children = (
+				51A47AFC2D9DB48300248E26 /* Views */,
+				51A47AFB2D9DB47D00248E26 /* Handlers */,
 				51BFD0B92D92C41300FDC5BD /* Info.plist */,
 				511ACD2F2D578577001270BD /* habittrackerApp.swift */,
-				51EB2CC72D9949F6004959F5 /* HabitCard.swift */,
-				51EB2CC92D995909004959F5 /* EditView.swift */,
-				511ACD312D578577001270BD /* ContentView.swift */,
-				519BB79D2D591A7E000264C2 /* LoginView.swift */,
-				519BB79B2D591864000264C2 /* HomeView.swift */,
-				512999162D941EE000970462 /* Habit.swift */,
-				51BFD0B72D92BEA500FDC5BD /* CreateView.swift */,
-				514CC5AA2D9589C600D89894 /* HabitStore.swift */,
 				511ACD332D57857A001270BD /* Assets.xcassets */,
 				511ACD352D57857A001270BD /* habittracker.entitlements */,
 				511ACD362D57857A001270BD /* Preview Content */,
@@ -150,6 +144,28 @@
 				511ACD4D2D57857A001270BD /* habittrackerUITestsLaunchTests.swift */,
 			);
 			path = habittrackerUITests;
+			sourceTree = "<group>";
+		};
+		51A47AFB2D9DB47D00248E26 /* Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				512999162D941EE000970462 /* Habit.swift */,
+				514CC5AA2D9589C600D89894 /* HabitStore.swift */,
+			);
+			path = Handlers;
+			sourceTree = "<group>";
+		};
+		51A47AFC2D9DB48300248E26 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				51EB2CC72D9949F6004959F5 /* HabitCard.swift */,
+				51EB2CC92D995909004959F5 /* EditView.swift */,
+				511ACD312D578577001270BD /* ContentView.swift */,
+				519BB79D2D591A7E000264C2 /* LoginView.swift */,
+				519BB79B2D591864000264C2 /* HomeView.swift */,
+				51BFD0B72D92BEA500FDC5BD /* CreateView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -452,7 +468,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = habittracker/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = trackit;
+				INFOPLIST_KEY_CFBundleDisplayName = trackIt;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -499,7 +515,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = habittracker/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = trackit;
+				INFOPLIST_KEY_CFBundleDisplayName = trackIt;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

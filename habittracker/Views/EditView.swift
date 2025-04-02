@@ -30,7 +30,7 @@ struct EditView: View {
         _habitDesc = State(initialValue: habit.description)
         _habitColor = State(initialValue: Color(hex: habit.colorHex))
         _notifications = State(initialValue: habit.notificationsEnabled)
-        _notificationTime = State(initialValue: habit.notificationDate)
+        _notificationTime = State(initialValue: habit.notificationDate ?? Date())
         
         let freq = Frequency.allCases.first { $0.rawValue == habit.frequency } ?? .daily
         _selectedFrequency = State(initialValue: freq)

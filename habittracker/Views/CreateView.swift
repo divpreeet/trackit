@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 struct CreateView: View {
     @State private var habitName = ""
@@ -6,28 +7,26 @@ struct CreateView: View {
     @State private var habitColor = Color.red
     @State private var showCustomPicker = false
     @State private var notifications = false
-    @State private var notificationtime = Date()
-
+    @State private var notificationTime = Date()
+    
     enum Frequency: String, CaseIterable {
         case daily = "Daily"
         case weekly = "Weekly"
         case monthly = "Monthly"
     }
     @State private var selectedFrequency: Frequency = .daily
-
-    let presetColors: [Color] = [
-        .red, .yellow, .green, .blue
-    ]
+    
+    let presetColors: [Color] = [.red, .yellow, .green, .blue]
     
     @EnvironmentObject var habitStore: HabitStore
     @Environment(\.presentationMode) var presentationMode
     
-    // disable the create button if data isnt filled
-    var isdisabled: Bool {
+
+    var isDisabled: Bool {
         habitName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
         habitDesc.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
-
+    
     var body: some View {
         VStack(spacing: 0) {
             Form {
@@ -44,9 +43,7 @@ struct CreateView: View {
                         Text("Habit Frequency")
                             .font(.system(size: 17, weight: .bold))
                             .foregroundColor(.white)
-                        
                         Spacer()
-                        
                         Picker("", selection: $selectedFrequency) {
                             ForEach(Frequency.allCases, id: \.self) { frequency in
                                 Text(frequency.rawValue)
@@ -107,8 +104,7 @@ struct CreateView: View {
                             Text("Enable Notifications")
                                 .font(.system(size: 17, weight: .bold))
                                 .foregroundColor(.white)
-                            
-                            Text("Receive notifications as reminders to keep your habit going!")
+                            Text("Receive reminders to track your habit!")
                                 .font(.footnote)
                                 .foregroundColor(.gray)
                         }
@@ -116,7 +112,7 @@ struct CreateView: View {
                     .tint(.blue)
                     
                     if notifications {
-                        DatePicker("Select Time", selection: $notificationtime, displayedComponents: .hourAndMinute)
+                        DatePicker("Select Time", selection: $notificationTime, displayedComponents: .hourAndMinute)
                             .datePickerStyle(WheelDatePickerStyle())
                             .labelsHidden()
                             .frame(maxWidth: .infinity)
@@ -129,13 +125,17 @@ struct CreateView: View {
             .background(Color(hex: 0x080808))
             
             Button(action: {
-                let newHabit = Habit(name: habitName,
-                                     description: habitDesc,
-                                     frequency: selectedFrequency.rawValue,
-                                     colorHex: habitColor.toHex,
-                                     notificationsEnabled: notifications,
-                                     creationDate: Date(),
-                                     notificationDate: notificationtime)
+                // Create a new Habit with the provided details.
+                let newHabit = Habit(
+                    name: habitName,
+                    description: habitDesc,
+                    frequency: selectedFrequency.rawValue,
+                    colorHex: habitColor.toHex,
+                    notificationsEnabled: notifications,
+                    creationDate: Date(),
+                    notificationDate: notifications ? notificationTime : nil
+                )
+                
                 habitStore.add(habit: newHabit)
                 presentationMode.wrappedValue.dismiss()
             }) {
@@ -148,7 +148,7 @@ struct CreateView: View {
                     .cornerRadius(10)
             }
             .padding()
-            .disabled(isdisabled)
+            .disabled(isDisabled)
         }
         .background(Color(hex: 0x080808).edgesIgnoringSafeArea(.all))
     }
@@ -156,6 +156,6 @@ struct CreateView: View {
 
 struct CreateView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateView()
+        CreateView().environmentObject(HabitStore())
     }
 }

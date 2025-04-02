@@ -6,12 +6,28 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 @main
 struct habittrackerApp: App {
+    init() {
+        requestNotificationPermission()
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
+        }
+    }
+
+    func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { success, error in
+            if success {
+                print("Notifications allowed")
+            } else if let error = error {
+                print("Error: \(error.localizedDescription)")
+            }
         }
     }
 }
+
