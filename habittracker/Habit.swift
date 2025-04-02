@@ -16,6 +16,7 @@ struct Habit: Identifiable, Codable {
     let notificationsEnabled: Bool
     let creationDate: Date
     var lastCompleted: Date? = nil
+    let notificationDate: Date
     
     var isCompletedForToday: Bool {
         guard let last = lastCompleted else { return false }

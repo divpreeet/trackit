@@ -6,6 +6,7 @@ struct CreateView: View {
     @State private var habitColor = Color.red
     @State private var showCustomPicker = false
     @State private var notifications = false
+    @State private var notificationtime = Date()
 
     enum Frequency: String, CaseIterable {
         case daily = "Daily"
@@ -113,6 +114,15 @@ struct CreateView: View {
                         }
                     }
                     .tint(.blue)
+                    
+                    if notifications {
+                        DatePicker("Select Time", selection: $notificationtime, displayedComponents: .hourAndMinute)
+                            .datePickerStyle(WheelDatePickerStyle())
+                            .labelsHidden()
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .accentColor(.blue)
+                    }
                 }
             }
             .scrollContentBackground(.hidden)
@@ -124,7 +134,8 @@ struct CreateView: View {
                                      frequency: selectedFrequency.rawValue,
                                      colorHex: habitColor.toHex,
                                      notificationsEnabled: notifications,
-                                     creationDate: Date())
+                                     creationDate: Date(),
+                                     notificationDate: notificationtime)
                 habitStore.add(habit: newHabit)
                 presentationMode.wrappedValue.dismiss()
             }) {

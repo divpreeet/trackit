@@ -7,6 +7,7 @@ struct EditView: View {
     @State private var showCustomPicker = false
     @State private var notifications: Bool
     @State private var selectedFrequency: Frequency
+    @State private var notificationTime: Date
     
     let habit: Habit
     
@@ -29,6 +30,7 @@ struct EditView: View {
         _habitDesc = State(initialValue: habit.description)
         _habitColor = State(initialValue: Color(hex: habit.colorHex))
         _notifications = State(initialValue: habit.notificationsEnabled)
+        _notificationTime = State(initialValue: habit.notificationDate)
         
         let freq = Frequency.allCases.first { $0.rawValue == habit.frequency } ?? .daily
         _selectedFrequency = State(initialValue: freq)
@@ -57,7 +59,7 @@ struct EditView: View {
                 Section {
                     HStack {
                         Text("Habit Frequency")
-                            .font(.system(size: 17, weight: .bold))
+                            .font(.system(size: 17))
                             .foregroundColor(.white)
                         
                         Spacer()
@@ -131,6 +133,19 @@ struct EditView: View {
                         }
                     }
                     .tint(Color.blue)
+                    
+                    if notifications {
+                        DatePicker(
+                            "Notification Time",
+                            selection: $notificationTime,
+                            displayedComponents: .hourAndMinute
+                        )
+                        .datePickerStyle(WheelDatePickerStyle())
+                        .labelsHidden()
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .accentColor(.blue)
+                    }
                 }
             }
             .scrollContentBackground(.hidden)
@@ -144,7 +159,8 @@ struct EditView: View {
                                          colorHex: habitColor.toHex,
                                          notificationsEnabled: notifications,
                                          creationDate: habit.creationDate,
-                                         lastCompleted: habit.lastCompleted)
+                                         lastCompleted: habit.lastCompleted,
+                                         notificationDate: notificationTime)
                     habitStore.habits[index] = updatedHabit
                 }
                 presentationMode.wrappedValue.dismiss()
@@ -175,7 +191,8 @@ struct EditView_Previews: PreviewProvider {
                                frequency: "Daily", 
                                colorHex: 0xFF0000, 
                                notificationsEnabled: false, 
-                               creationDate: Date())
+                               creationDate: Date(),
+                               notificationDate: Date())
         EditView(habit: sampleHabit)
     }
 }

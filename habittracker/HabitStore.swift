@@ -1,10 +1,3 @@
-//
-//  HabitStore.swift
-//  habittracker
-//
-//  Created by Divpreet Singh on 27/03/2025.
-//
-
 import Foundation
 
 class HabitStore: ObservableObject {
