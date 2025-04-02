@@ -35,7 +35,6 @@ struct CreateView: View {
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                     TextField("Habit Description", text: $habitDesc)
-                        .fontWeight(.bold)
                         .foregroundColor(.white)
                 }
                 

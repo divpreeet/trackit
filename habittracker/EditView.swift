@@ -17,7 +17,7 @@ struct EditView: View {
     }
     
     let presetColors: [Color] = [
-        .red, .orange, .yellow, .green, .blue, .purple, .pink
+        .red, .yellow, .green, .blue
     ]
     
     @EnvironmentObject var habitStore: HabitStore
@@ -42,7 +42,7 @@ struct EditView: View {
     var body: some View {
         VStack(spacing: 0) {
             Form {
-                Section(header: Text("BASIC INFORMATION").foregroundColor(.gray).font(.caption)) {
+                Section {
                     TextField("Habit Name", text: $habitName)
                         .font(.system(size: 17, weight: .bold))
                         .foregroundColor(.white)
@@ -54,10 +54,10 @@ struct EditView: View {
                         .padding(.vertical, 4)
                 }
                 
-                Section(header: Text("FREQUENCY").foregroundColor(.gray).font(.caption)) {
+                Section {
                     HStack {
                         Text("Habit Frequency")
-                            .font(.system(size: 17))
+                            .font(.system(size: 17, weight: .bold))
                             .foregroundColor(.white)
                         
                         Spacer()
@@ -70,38 +70,33 @@ struct EditView: View {
                         }
                         .pickerStyle(MenuPickerStyle())
                         .foregroundColor(.white)
-                        .tint(Color(hex: habitColor.toHex))
+                        .tint(Color.blue)
                     }
                 }
                 
-                Section(header: Text("COLOR").foregroundColor(.gray).font(.caption)) {
-                    LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 7), spacing: 12) {
+                Section {
+                    LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 5)) {
                         ForEach(presetColors, id: \.self) { color in
                             Circle()
                                 .fill(color)
-                                .frame(width: 38, height: 38)
+                                .frame(width: 35, height: 35)
                                 .overlay(
                                     Circle()
-                                        .stroke(habitColor == color ? Color.white : Color.clear,
+                                        .stroke(habitColor == color ? Color.white.opacity(0.8) : Color.clear,
                                                 lineWidth: 3)
                                 )
-                                .shadow(color: color.opacity(0.5), radius: 3, x: 0, y: 2)
                                 .onTapGesture {
-                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                        habitColor = color
-                                    }
+                                    habitColor = color
                                 }
                         }
                         
                         Button(action: {
-                            withAnimation {
-                                showCustomPicker.toggle()
-                            }
+                            showCustomPicker.toggle()
                         }) {
                             ZStack {
                                 Circle()
                                     .fill(Color.white)
-                                    .frame(width: 38, height: 38)
+                                    .frame(width: 35, height: 35)
                                     .overlay(
                                         Image(systemName: "ellipsis")
                                             .foregroundColor(.black)
@@ -110,31 +105,32 @@ struct EditView: View {
                             }
                         }
                     }
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 5)
                     
                     if showCustomPicker {
                         ColorPicker("Pick a custom color",
                                     selection: $habitColor,
                                     supportsOpacity: false)
-                        .padding(.vertical, 8)
+                        .padding(.vertical, 5)
                         .foregroundColor(.white)
-                        .font(.system(size: 16, weight: .medium))
+                        .fontWeight(.bold)
                     }
                 }
                 
-                Section(header: Text("NOTIFICATIONS").foregroundColor(.gray).font(.caption)) {
+                Section {
                     Toggle(isOn: $notifications) {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Enable Notifications")
-                                .font(.system(size: 17))
+                                .font(.system(size: 17, weight: .bold))
                                 .foregroundColor(.white)
+    
                             
                             Text("Receive reminders to keep your habit going!")
                                 .font(.footnote)
                                 .foregroundColor(.gray)
                         }
                     }
-                    .tint(Color(hex: habitColor.toHex))
+                    .tint(Color.blue)
                 }
             }
             .scrollContentBackground(.hidden)
@@ -174,8 +170,8 @@ struct EditView: View {
 
 struct EditView_Previews: PreviewProvider {
     static var previews: some View {
-        let sampleHabit = Habit(name: "Sample Habit", 
-                               description: "Sample Description", 
+        let sampleHabit = Habit(name: "habit",
+                               description: "goofy ahh",
                                frequency: "Daily", 
                                colorHex: 0xFF0000, 
                                notificationsEnabled: false, 
