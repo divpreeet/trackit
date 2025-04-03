@@ -58,12 +58,35 @@ class HabitStore: ObservableObject {
         guard let notificationDate = habit.notificationDate, habit.notificationsEnabled else { return }
         
         let content = UNMutableNotificationContent()
-        content.title = "Reminder for : \(habit.name)"
-        content.body = "Track your habit!"
-        content.sound = .default
         
-        let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: notificationDate)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        content.title = "hey, track your reminder - \(habit.name)"
+        content.body = "dont make me remind you again 👊"
+        content.sound = .defaultCritical
+        
+        let calendar = Calendar.current
+        let baseComponents = calendar.dateComponents([.hour, .minute], from: notificationDate)
+        
+        var triggerComponents = DateComponents()
+        triggerComponents.hour = baseComponents.hour
+        triggerComponents.minute = baseComponents.minute
+        
+        switch habit.frequency.lowercased() {
+        case "daily":
+            break
+            
+        case "weekly":
+            let weekday = calendar.component(.weekday, from: notificationDate)
+            triggerComponents.weekday = weekday
+            
+        case "monthly":
+            let day = calendar.component(.day, from: notificationDate)
+            triggerComponents.day = day
+            
+        default:
+            break
+        }
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerComponents, repeats: true)
         
         let request = UNNotificationRequest(identifier: habit.id.uuidString, content: content, trigger: trigger)
         
@@ -72,5 +95,6 @@ class HabitStore: ObservableObject {
                 print(error.localizedDescription)
             }
         }
+        
     }
 }

@@ -125,7 +125,7 @@ struct CreateView: View {
             .background(Color(hex: 0x080808))
             
             Button(action: {
-                // Create a new Habit with the provided details.
+                // Create a new habit with the provided details - notification date needs fix.
                 let newHabit = Habit(
                     name: habitName,
                     description: habitDesc,

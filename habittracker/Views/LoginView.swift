@@ -1,10 +1,3 @@
-//
-//  LoginView.swift
-//  habittracker
-//
-//  Created by Divpreet Singh on 09/02/2025.
-//
-
 import SwiftUI
 
 struct LoginView: View {

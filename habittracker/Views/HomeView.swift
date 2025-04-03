@@ -68,6 +68,7 @@ struct HomeView: View {
                     .listStyle(PlainListStyle())
                     .background(Color(hex: 0x080808))
                     .scrollContentBackground(.hidden)
+                    
                 }
             }
             .sheet(isPresented: $showEditSheet, onDismiss: {
@@ -95,6 +96,7 @@ struct HomeView: View {
 
 struct HeaderView: View {
     @State private var createScreen = false
+    @State private var settingsScreen = false
     @EnvironmentObject var habitStore: HabitStore
     
     init() {
@@ -114,11 +116,32 @@ struct HeaderView: View {
     var body: some View {
         HStack(spacing: 16) {
             Button(action: {
-                print("opened settings")
+                settingsScreen.toggle()
             }) {
                 Image(systemName: "switch.2")
                     .font(.system(size: 18))
                     .foregroundColor(.white)
+            }
+            .sheet(isPresented: $settingsScreen) {
+                NavigationView {
+                    SettingView()
+                        .navigationBarTitle("Settings", displayMode: .inline)
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarLeading) {
+                                Button("Cancel") {
+                                    settingsScreen = false
+                                }
+                                .foregroundColor(.white)
+                            }
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                Button("Done") {
+                                    print("Saved settigns")
+                                    // add save settings to settings view instead of here, like create view
+                                }
+                                .foregroundColor(.white)
+                            }
+                        }
+                }
             }
             
             Spacer()
