@@ -12,6 +12,7 @@ class HabitStore: ObservableObject {
     
     init() {
         loadHabits()
+        checkAndResetHabits()   
     }
     
     func add(habit: Habit) {
@@ -51,6 +52,21 @@ class HabitStore: ObservableObject {
         if let savedData = UserDefaults.standard.data(forKey: saveKey),
            let decoded = try? JSONDecoder().decode([Habit].self, from: savedData) {
             habits = decoded
+        }
+    }
+    
+    
+    func checkAndResetHabits() {
+        let calendar = Calendar.current
+        let now = Date()
+        
+        for index in habits.indices {
+            var habit = habits[index]
+            
+            if habit.needAReset() {
+                habits[index].lastCompleted = nil
+                habits[index].lastReset = now
+            }   
         }
     }
     
